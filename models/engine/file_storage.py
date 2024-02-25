@@ -24,7 +24,7 @@ class FileStorage:
         """This method serialize object to json file"""
 
         with open(self.__file_path, 'w') as file:
-            json.dump(self.__objects, file, indent=2)
+            json.dump(self.__objects, file)
 
     def reload(self):
         """This method de-serialize object back to instance"""
