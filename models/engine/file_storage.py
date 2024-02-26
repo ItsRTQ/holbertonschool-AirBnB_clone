@@ -43,6 +43,6 @@ class FileStorage:
                 loaded_data = json.load(file)
                 for outter_key, inner_dict in loaded_data.items():
                     temp_key = "{}.{}".format(
-                        inner_dict["__class__"], inner_dict["id"])
+                        inner_dict['__class__'], inner_dict['id'])
                     temp[temp_key] = BaseModel(**inner_dict)
                 FileStorage.__objects = temp
