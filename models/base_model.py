@@ -38,8 +38,9 @@ class BaseModel:
         """
         Updates the instance's updated_at attribute
         """
-        storage.save()
+
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
