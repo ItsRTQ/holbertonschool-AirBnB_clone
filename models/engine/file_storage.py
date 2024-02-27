@@ -1,23 +1,48 @@
+#!/usr/bin/python3
+"""This module defines the class FileStorage"""
 import json
-from models.base_model import BaseModel
+import os
 
 class FileStorage:
-    __file_path = 'file.json'
+    """This class serializes instances to a JSON file and deserializes"""
+
+    __file_path = "file.json"
     __objects = {}
 
+    def __init__(self) -> None:
+        self.targeted_dict = {}
+        self.temp_key = ""
+        self.objs = {}
+
     def all(self):
-        return self.__objects
+        """all, returns the objects saved in instance attribute"""
+
+        return FileStorage.__objects
 
     def new(self, obj):
-        self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
+        """new, add obj to the instance attribute object"""
+
+        self.temp_key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.objs[self.temp_key] = self.targeted_dict
 
     def save(self):
-        with open(self.__file_path, 'w') as f:
-            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
+        """This method serialize object to json file"""
+        for key, instance in FileStorage.__objects.items():
+            self.objs[key] = instance.to_dict()
+        self.objs[self.temp_key] = self.targeted_dict
+        with open(self.__file_path, 'w') as file:
+            json.dump(self.objs, file, indent=2)
 
     def reload(self):
-        try:
-            with open(self.__file_path, 'r') as f:
-                self.__objects = {k: BaseModel(**v) for k, v in json.load(f).items()}
-        except FileNotFoundError:
-            pass
+        """This method de-serialize object back to instance"""
+
+        from models.base_model import BaseModel
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r') as file:
+                temp = {}
+                loaded_data = json.load(file)
+                for outter_key, inner_dict in loaded_data.items():
+                    temp_key = "{}.{}".format(
+                        inner_dict['__class__'], inner_dict['id'])
+                    temp[temp_key] = BaseModel(**inner_dict)
+                FileStorage.__objects = temp
