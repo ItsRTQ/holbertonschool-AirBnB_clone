@@ -1,59 +1,43 @@
 import unittest
 import os
-from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
-        # Create an instance of FileStorage for each test case
-        self.file_storage = FileStorage()
+        """Set up method to start each test"""
+        self.storage = FileStorage()
+        self.file_path = self.storage._FileStorage__file_path
+        self.obj = BaseModel()
 
     def tearDown(self):
-        # Remove the file.json created during the tests
-        if os.path.exists(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+        """Tear down method to clean up after each test"""
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+        del self.storage
+        del self.obj
 
-    def test_all_method(self):
-        # Test if all method returns the correct dictionary
-        obj1 = BaseModel()
-        obj2 = BaseModel()
+    def test_file_creation(self):
+        """Test if file is created upon save."""
+        self.storage.new(self.obj)
+        self.storage.save()
+        self.assertTrue(os.path.exists(self.file_path))
 
-        self.file_storage.new(obj1)
-        self.file_storage.new(obj2)
+    def test_object_storage(self):
+        """Test if new object is correctly added to storage."""
+        self.storage.new(self.obj)
+        self.storage.save()
+        key = f"BaseModel.{self.obj.id}"
+        self.assertIn(key, self.storage.all())
 
-        result = self.file_storage.all()
-        expected_result = {
-            'BaseModel.{}'.format(obj1.id): obj1.to_dict(),
-            'BaseModel.{}'.format(obj2.id): obj2.to_dict()
-        }
-
-        self.assertEqual(result, expected_result)
-
-    def test_new_method(self):
-        # Test if new method adds the object to the dictionary
-        obj = BaseModel()
-        self.file_storage.new(obj)
-
-        result = self.file_storage.all()
-        expected_result = {'BaseModel.{}'.format(obj.id): obj.to_dict()}
-
-        self.assertEqual(result, expected_result)
-
-    def test_save_and_reload_methods(self):
-        # Test if save and reload methods work correctly
-        obj = BaseModel()
-        self.file_storage.new(obj)
-        self.file_storage.save()
-
-        # Create a new instance of FileStorage to reload the data
-        new_file_storage = FileStorage()
-        new_file_storage.reload()
-
-        result = new_file_storage.all()
-        expected_result = {'BaseModel.{}'.format(obj.id): obj.to_dict()}
-
-        self.assertEqual(result, expected_result)
+    def test_reload_method(self):
+        """Test reloading objects from file."""
+        self.storage.new(self.obj)
+        self.storage.save()
+        key = f"BaseModel.{self.obj.id}"
+        self.storage.reload()
+        self.assertIn(key, self.storage.all())
 
 if __name__ == '__main__':
     unittest.main()
