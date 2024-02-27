@@ -25,7 +25,6 @@ class BaseModel:
                     setattr(self, key, value)
 
         if not kwargs:
-            storage.targeted_dict = self.to_dict()
             storage.new(self)
 
     def __str__(self):
@@ -41,7 +40,6 @@ class BaseModel:
         """
 
         self.updated_at = datetime.now()
-        storage.targeted_dict = self.to_dict()
         storage.save()
 
     def to_dict(self):
