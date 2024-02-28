@@ -57,18 +57,13 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_method(self):
         self.file_storage._FileStorage__objects.clear()
+
         self.file_storage.reload()
-        objects = self.file_storage.all()
-        expected_objects = {key: obj for key, obj in objects.items() if isinstance(obj, BaseModel)}
-        self.assertEqual(objects, expected_objects)
-        self.file_storage._FileStorage__objects.clear()
-        self.file_storage.reload()
-        objects = self.file_storage.all()
-        
-        # Filter out objects that are not instances of BaseModel
-        expected_objects = {key: obj for key, obj in objects.items() if isinstance(obj, BaseModel)}
-        
-        self.assertEqual(objects, expected_objects)
+        objects_after_reload = self.file_storage.all()
+        self.assertIn(self.obj_name, objects_after_reload)
+        self.assertIsInstance(objects_after_reload[self.obj_name], BaseModel)
+        self.assertEqual(objects_after_reload[self.obj_name].id, self.obj.id)
+
 
 
 if __name__ == '__main__':
