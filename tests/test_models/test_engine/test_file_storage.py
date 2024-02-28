@@ -81,11 +81,10 @@ class TestFileStorage(unittest.TestCase):
         initial_updated_at = self.obj.updated_at
         self.obj.save()
         updated_at_after_save = self.obj.updated_at
-        # Verify that updated_at has been updated after calling save()
         self.assertNotEqual(initial_updated_at, updated_at_after_save)
-        # Verify that storage.save() has been called
         with open(self.file_path, 'r') as file:
             data = json.load(file)
+
         self.assertIn(self.obj_name, data)
         self.assertDictEqual(data[self.obj_name], self.obj.to_dict())
 
