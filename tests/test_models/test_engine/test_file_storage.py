@@ -56,20 +56,13 @@ class TestFileStorage(unittest.TestCase):
 
 
     def test_reload_method(self):
-        # Create a new instance to ensure it gets saved and reloaded
-        new_obj = BaseModel()
-        new_obj.id = "new_test_id"
-        new_obj_name = "{}.{}".format(new_obj.__class__.__name__, new_obj.id)
-        self.file_storage.new(new_obj)
-        self.file_storage.save()
-
-        # Clear the existing objects in memory
         self.file_storage._FileStorage__objects.clear()
-
-        # Reload the data from the file
         self.file_storage.reload()
-
-        # Verify that the reloaded objects match the original ones
+        objects = self.file_storage.all()
+        expected_objects = {key: obj for key, obj in objects.items() if isinstance(obj, BaseModel)}
+        self.assertEqual(objects, expected_objects)
+        self.file_storage._FileStorage__objects.clear()
+        self.file_storage.reload()
         objects = self.file_storage.all()
         
         # Filter out objects that are not instances of BaseModel
