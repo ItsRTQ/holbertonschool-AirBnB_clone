@@ -2,7 +2,7 @@
 """
 BaseModel module: Defines the BaseModel class
 """
-from models import storage
+import models
 from uuid import uuid4
 from datetime import datetime
 
@@ -23,9 +23,8 @@ class BaseModel:
                     value = datetime.fromisoformat(value)
                 if key != "__class__":
                     setattr(self, key, value)
-
-        if not kwargs:
-            storage.new(self)
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -40,7 +39,7 @@ class BaseModel:
         """
 
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
