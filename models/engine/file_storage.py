@@ -50,6 +50,8 @@ class FileStorage:
                 instance_name = globals()[key_name]
                 obj = instance_name(**inner_dict)
                 FileStorage.__objects[outter_dict] = obj
+        else:
+            FileStorage.__objects = {}
 
     def reset_filestorage(self):
         """resets file storage"""
