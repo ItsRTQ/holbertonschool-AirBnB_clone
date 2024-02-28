@@ -23,8 +23,7 @@ class BaseModel:
                     value = datetime.fromisoformat(value)
                 if key != "__class__":
                     setattr(self, key, value)
-
-        if not kwargs:
+        else:
             storage.new(self)
 
     def __str__(self):
