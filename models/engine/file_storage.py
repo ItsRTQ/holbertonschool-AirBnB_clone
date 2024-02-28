@@ -2,6 +2,7 @@
 """This module defines the class FileStorage"""
 import json
 import os
+from models.base_model import BaseModel
 
 class FileStorage:
     """This class serializes instances to a JSON file and deserializes"""
@@ -12,7 +13,7 @@ class FileStorage:
     def all(self):
         """all, returns the objects saved in storage"""
 
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """new, add obj to the instance attribute object
@@ -44,3 +45,8 @@ class FileStorage:
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as file:
                 FileStorage.__objects = json.load(file)
+            for outter_dict, inner_dict in FileStorage.__objects.items():
+                key_name, obj_id = outter_dict.split('.')
+                instance_name = globals()[key_name]
+                obj = instance_name(**inner_dict)
+                FileStorage.__objects[outter_dict] = obj
