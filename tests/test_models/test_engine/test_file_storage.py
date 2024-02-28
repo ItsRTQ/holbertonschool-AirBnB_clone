@@ -22,11 +22,6 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
-    def test_all(self):
-        inst = FileStorage()
-        result = inst.all().copy()
-        self.assertEqual(result, inst.all())
-
     def test_file_path_default_value(self):
         self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
@@ -40,8 +35,8 @@ class TestFileStorage(unittest.TestCase):
 
     def test_all_method(self):
         objects = self.file_storage.all()
-        expected_objects = {key: obj for key, obj in objects.items() if isinstance(obj, BaseModel)}
-        self.assertEqual(objects, expected_objects)
+        self.assertEqual(len(objects), 2)
+        self.assertEqual(objects[self.obj_name], self.obj)
 
     def test_new_method(self):
         new_obj = BaseModel()
