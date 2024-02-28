@@ -66,10 +66,16 @@ class TestFileStorage(unittest.TestCase):
 
     def test_base_model_save_method(self):
         self.obj.save()
-
         with open(self.file_path, 'r') as file:
             data = json.load(file)
         self.assertIn(self.obj_name, data)
+        serialized_attributes = data[self.obj_name]
+        self.assertIn("id", serialized_attributes)
+        self.assertIn("created_at", serialized_attributes)
+        self.assertIn("updated_at", serialized_attributes)
+        self.assertEqual(serialized_attributes["id"], self.obj.id)
+        self.assertEqual(serialized_attributes["created_at"], self.obj.created_at.isoformat())
+        self.assertEqual(serialized_attributes["updated_at"], self.obj.updated_at.isoformat())
 
 if __name__ == '__main__':
     unittest.main()
