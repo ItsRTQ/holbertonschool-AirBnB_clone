@@ -8,7 +8,7 @@ class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
         # Run this method before each test case
-        self.file_path = "test_file.json"
+        self.file_path = "file.json"
         self.file_storage = FileStorage()
         self.file_storage.reset_filestorage()
         self.obj = BaseModel()
@@ -46,6 +46,14 @@ class TestFileStorage(unittest.TestCase):
         objects = self.file_storage.all()
         expected_objects = {key: obj for key, obj in objects.items() if isinstance(obj, BaseModel)}
         self.assertEqual(objects, expected_objects)
+
+    def test_save_method(self):
+        self.file_storage.save()
+        with open("file.json", 'r') as file:
+            data = json.load(file)
+        self.assertIn(self.obj_name, data)
+        self.assertEqual(data[self.obj_name], self.obj.to_dict())
+
 
     def test_reload_method(self):
         # Create a new instance to ensure it gets saved and reloaded
