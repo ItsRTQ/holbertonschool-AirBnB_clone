@@ -64,7 +64,12 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(objects_after_reload[self.obj_name], BaseModel)
         self.assertEqual(objects_after_reload[self.obj_name].id, self.obj.id)
 
+    def test_base_model_save_method(self):
+        self.obj.save()
 
+        with open(self.file_path, 'r') as file:
+            data = json.load(file)
+        self.assertIn(self.obj_name, data)
 
 if __name__ == '__main__':
     unittest.main()
