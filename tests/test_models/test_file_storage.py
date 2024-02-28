@@ -25,6 +25,9 @@ class TestFileStorage(unittest.TestCase):
     def test_file_path_default_value(self):
         self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
+    def test_file_path_invalid(self):
+        self.assertIsNot(FileStorage._FileStorage__file_path, "fake.json")
+
     def test_objects_default_value(self):
         self.file_storage.reset_filestorage()
         self.assertEqual(FileStorage._FileStorage__objects, {})
