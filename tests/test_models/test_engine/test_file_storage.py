@@ -22,6 +22,11 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
+    def test_all(self):
+        inst = FileStorage()
+        result = inst.all()
+        self.assertEqual(result, inst.all())
+
     def test_file_path_default_value(self):
         self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
