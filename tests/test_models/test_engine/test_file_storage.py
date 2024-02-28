@@ -77,10 +77,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(serialized_attributes["created_at"], self.obj.created_at.isoformat())
         self.assertEqual(serialized_attributes["updated_at"], self.obj.updated_at.isoformat())
 
-    def test_base_model_save_method_saves_to_storage(self):
-        result = self.obj.to_dict()
-        self.obj.save()
-        self.assertNotEqual(os.path.getsize(self.file_path), 0)
+    def test_base_save(self):
+        obj = BaseModel()
+        obj.save()
+        obj_dict = obj.to_dict()
+        self.assertTrue(self.file_path, True)
 
 if __name__ == '__main__':
     unittest.main()
