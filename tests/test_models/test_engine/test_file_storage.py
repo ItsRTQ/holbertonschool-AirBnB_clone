@@ -24,7 +24,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_all(self):
         inst = FileStorage()
-        result = inst.all()
+        result = inst.all().copy()
         self.assertEqual(result, inst.all())
 
     def test_file_path_default_value(self):
