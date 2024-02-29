@@ -13,16 +13,10 @@ class User_test(unittest.TestCase):
     def setUp(self):
         self.instance = User(email="example@yahoo.com", password="password", first_name="name", last_name="last Name")
 
-    def test_email(self):
+    def test_user_attributes(self):
         self.assertEqual(self.instance.email, "example@yahoo.com")
-
-    def test_password(self):
         self.assertEqual(self.instance.password, "password")
-
-    def test_firstName(self):
         self.assertEqual(self.instance.first_name, "name")
-
-    def test_lastName(self):
         self.assertEqual(self.instance.last_name, "last Name")
 
 if __name__ == '__main__':
