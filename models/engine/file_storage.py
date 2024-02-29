@@ -3,6 +3,7 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -15,7 +16,7 @@ class FileStorage:
         """Returns a dictionary of all valid classes"""
         return {
             "BaseModel": BaseModel,
-            # Add other model classes here
+            "User": User
             # "User": User,
             # "Place": Place,
             # etc.
