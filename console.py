@@ -5,6 +5,7 @@ from models import storage
 from models.base_model import BaseModel
 import shlex  # for splitting the line into arguments
 
+
 class HBNBCommand(cmd.Cmd):
     """Interprets commands for the HBNB console"""
     prompt = '(hbnb) '
@@ -22,7 +23,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
+        """
+        Creates a new instance of BaseModel,
+        saves it to the JSON file, and prints the id.
+        """
         if not arg:
             print("** class name missing **")
             return
@@ -34,7 +38,10 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id."""
+        """
+        Prints the string representation of an
+        instance based on the class name and id.
+        """
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -73,15 +80,22 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name."""
+        """
+        Prints all string representation of all
+        instances based or not on the class name.
+        """
         args = shlex.split(arg)
         if args and args[0] not in storage.classes():
             print("** class doesn't exist **")
             return
-        print([str(obj) for obj in storage.all().values() if not args or isinstance(obj, storage.classes().get(args[0], object))])
+        print([str(obj) for obj in storage.all().values() if not args or
+               isinstance(obj, storage.classes().get(args[0], object))])
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute."""
+        """
+        Updates an instance based on the
+        class name and id by adding or updating attribute.
+        """
         args = shlex.split(arg)
         if len(args) < 4:
             print("** class name missing **" if len(args) < 1 else
@@ -100,6 +114,7 @@ class HBNBCommand(cmd.Cmd):
         instance = objects[key]
         setattr(instance, args[2], args[3].strip('"'))
         instance.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
