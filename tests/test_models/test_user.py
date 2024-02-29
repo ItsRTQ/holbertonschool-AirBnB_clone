@@ -1,23 +1,27 @@
-#!/usr/bin/python3
-"""
-Unit Test for User Class
-"""
 import unittest
-from datetime import datetime
 from models.user import User
-from models.base_model import BaseModel
-from uuid import UUID
 
-class User_test(unittest.TestCase):
+class TestUserAttributes(unittest.TestCase):
 
-    def setUp(self):
-        self.instance = User(email="example@yahoo.com", password="password", first_name="name", last_name="last Name")
+    def test_user_attributes_default_values(self):
+        user = User()
+        self.assertEqual(user.email, "")
+        self.assertEqual(user.password, "")
+        self.assertEqual(user.first_name, "")
+        self.assertEqual(user.last_name, "")
 
-    def test_user_attributes(self):
-        self.assertEqual(self.instance.email, "example@yahoo.com")
-        self.assertEqual(self.instance.password, "password")
-        self.assertEqual(self.instance.first_name, "name")
-        self.assertEqual(self.instance.last_name, "last Name")
+    def test_user_attributes_assignment(self):
+        email = "test@example.com"
+        password = "password123"
+        first_name = "John"
+        last_name = "Doe"
+
+        user = User(email=email, password=password, first_name=first_name, last_name=last_name)
+
+        self.assertEqual(user.email, email)
+        self.assertEqual(user.password, password)
+        self.assertEqual(user.first_name, first_name)
+        self.assertEqual(user.last_name, last_name)
 
 if __name__ == '__main__':
     unittest.main()
