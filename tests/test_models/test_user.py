@@ -24,3 +24,6 @@ class User_test(unittest.TestCase):
 
     def test_lastName(self):
         self.assertEqual(self.instance.last_name, "last Name")
+
+if __name__ == '__main__':
+    unittest.main()
