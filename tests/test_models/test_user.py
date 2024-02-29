@@ -11,20 +11,16 @@ from uuid import UUID
 class User_test(unittest.TestCase):
 
     def setUp(self):
-        self.instance = User()
+        self.instance = User(email="example@yahoo.com", password="password", first_name="name", last_name="last Name")
 
     def test_email(self):
-        self.instance.email = "example@yahoo.com"
         self.assertEqual(self.instance.email, "example@yahoo.com")
 
     def test_password(self):
-        self.instance.password = "password"
         self.assertEqual(self.instance.password, "password")
 
     def test_firstName(self):
-        self.instance.first_name = "name"
         self.assertEqual(self.instance.first_name, "name")
 
     def test_lastName(self):
-        self.instance.last_name = "last Name"
         self.assertEqual(self.instance.last_name, "last Name")
