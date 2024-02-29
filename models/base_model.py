@@ -6,6 +6,7 @@ import models
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     """
     Defines all common attributes/methods for other classes
@@ -43,7 +44,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Returns a dictionary containing all keys/values of the instance's __dict__
+        Returns a dictionary containing all
+        keys/values of the instance's __dict__
         """
         dict_rep = self.__dict__.copy()
         dict_rep['__class__'] = self.__class__.__name__
