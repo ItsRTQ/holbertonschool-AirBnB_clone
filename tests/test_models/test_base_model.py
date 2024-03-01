@@ -53,16 +53,16 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(instance_dict['updated_at'], str))
         self.assertTrue("id" in instance_dict)
 
-    def test_save_method_with_file_storage(self):
-        """Tests the save method with FileStorage"""
-        models.storage.reset_filestorage()
+    def test_save_method_updates_updated_at(self):
+        """Tests that the save method updates the updated_at attribute"""
         instance = BaseModel()
-        old_updated_at = instance.updated_at
+        initial_updated_at = instance.updated_at
         time.sleep(0.01)
         instance.save()
+        self.assertNotEqual(initial_updated_at, instance.updated_at)
         models.storage.reload()
         loaded_instance = models.storage.all()["BaseModel." + instance.id]
-        self.assertNotEqual(old_updated_at, loaded_instance.updated_at)
+        self.assertNotEqual(initial_updated_at, loaded_instance.updated_at)
 
 if __name__ == '__main__':
     unittest.main()
