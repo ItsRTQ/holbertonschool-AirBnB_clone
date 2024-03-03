@@ -13,3 +13,22 @@ The console is a command interpreter designed to manage the AirBnB objects of ou
 - Destroy an object
 
 
+## Unittesting
+
+We use python built-in unittest to test every class and all there methods and Object Instances
+
+- Methods work for there intendet use
+- Methods work as programmed
+- Methods work even if not use propertly
+- Methods call if functional
+- Object Instance are created correctly
+- Object Instance serialization & de-serialization work correctly
+- Object Instance data type are de-serialise correctly
+- Object Instance attribute are add correctly
+- Object Instance behave as intended on diferent scenarions
+
+
+## Contributors
+
+- Abdiel Feliciano | Abdiel-88
+- William Herrera  | ItsRTQ
