@@ -53,5 +53,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(instance_dict['updated_at'], str))
         self.assertTrue("id" in instance_dict)
 
+    def test_base_model_save_method(self):
+        """Tests the save method of BaseModel"""
+        instance = BaseModel()
+        instance.save()
+        key = "BaseModel." + instance.id
+        with open("file.json", "r") as file:
+            self.assertIn(key, file.read())
+
 if __name__ == '__main__':
     unittest.main()
